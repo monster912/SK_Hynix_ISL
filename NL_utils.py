@@ -19,40 +19,6 @@ def load_dataset():
     return train_set_x_orig, train_set_y_orig.reshape(-1), test_set_x_orig, test_set_y_orig.reshape(-1), classes
 
 
-def predict(X, y, parameters):
-    """
-    This function is used to predict the results of a  L-layer neural network.
-    
-    Arguments:
-    X -- data set of examples you would like to label
-    parameters -- parameters of the trained model
-    
-    Returns:
-    p -- predictions for the given dataset X
-    """
-    
-    m = X.shape[1]
-    n = len(parameters) // 2 # number of layers in the neural network
-    p = np.zeros((1,m))
-    
-    # Forward propagation
-    probas, caches = L_model_forward(X, parameters)
-
-    
-    # convert probas to 0/1 predictions
-    for i in range(0, probas.shape[1]):
-        if probas[0,i] > 0.5:
-            p[0,i] = 1
-        else:
-            p[0,i] = 0
-    
-    #print results
-    #print ("predictions: " + str(p))
-    #print ("true labels: " + str(y))
-    print("Accuracy: "  + str(np.sum((p == y)/m)))
-        
-    return p
-
 
 def linear_forward_test_case():
     np.random.seed(1)
@@ -149,6 +115,7 @@ def L_model_backward_test_case():
     X = np.random.rand(3,2)
     Y = np.array([[1, 1]])
     parameters = {'W1': np.array([[ 1.78862847,  0.43650985,  0.09649747]]), 'b1': np.array([[ 0.]])}
+
     aL, caches = (np.array([[ 0.60298372,  0.87182628]]), [((np.array([[ 0.20445225,  0.87811744],
            [ 0.02738759,  0.67046751],
            [ 0.4173048 ,  0.55868983]]),
@@ -239,7 +206,6 @@ def update_parameters_test_case():
     
     return parameters, grads
 
-
 def sigmoid(Z):
     """
     Implements the sigmoid activation in numpy
@@ -260,8 +226,10 @@ def sigmoid(Z):
 def relu(Z):
     """
     Implement the RELU function.
+
     Arguments:
     Z -- Output of the linear layer, of any shape
+
     Returns:
     A -- Post-activation parameter, of the same shape as Z
     cache -- a python dictionary containing "A" ; stored for computing the backward pass efficiently
@@ -278,9 +246,11 @@ def relu(Z):
 def relu_backward(dA, cache):
     """
     Implement the backward propagation for a single RELU unit.
+
     Arguments:
     dA -- post-activation gradient, of any shape
     cache -- 'Z' where we store for computing backward propagation efficiently
+
     Returns:
     dZ -- Gradient of the cost with respect to Z
     """
@@ -298,9 +268,11 @@ def relu_backward(dA, cache):
 def sigmoid_backward(dA, cache):
     """
     Implement the backward propagation for a single SIGMOID unit.
+
     Arguments:
     dA -- post-activation gradient, of any shape
     cache -- 'Z' where we store for computing backward propagation efficiently
+
     Returns:
     dZ -- Gradient of the cost with respect to Z
     """
@@ -313,3 +285,5 @@ def sigmoid_backward(dA, cache):
     assert (dZ.shape == Z.shape)
     
     return dZ
+
+

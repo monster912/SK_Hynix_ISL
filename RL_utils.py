@@ -29,7 +29,7 @@ def generate_normal(n_samples, p=0.8, seed=2019):
     Y1 = np.ones(n)
     Y2 = np.zeros(n)
     X_train = np.concatenate((X1[:n_train], X2[:n_train]))
-    X_test = np.concatenate((X1[n_train:], X2[n_train:]))
+    X_test = np.concatenate((X1[n_train:], X2[n_train:])) + np.random.randn(1) * 10
     Y_train = np.concatenate((Y1[:n_train], Y2[:n_train]))
     Y_test = np.concatenate((Y1[n_train:], Y2[n_train:]))
     return (X_train.T, Y_train), (X_test.T, Y_test)
@@ -110,3 +110,47 @@ def forward(w, b, X):
 
 def sigmoid(z):
     return 1 / (1 + np.exp(-z))
+
+def fit(X, Y):
+    
+    ### START CODE HERE ### 
+    w =(np.linalg.inv(X.T@X)@X.T)@Y
+    ### END CODE HERE ###
+    return w
+
+def get_accuracy(w, X, Y):
+    
+    pred = X.dot(w)
+    ### START CODE HERE ### 
+    yhat = np.sign(pred)
+    n_samples = len(Y)
+    n_correct = (yhat == Y).sum()
+    acc = n_correct / n_samples * 100
+    ### END CODE HERE ###
+    return acc
+
+def add_bias(X):
+    
+    ### START CODE HERE ###
+    X_bias = np.concatenate((X, np.ones((len(X), 1))), axis=1)
+    ### END CODE HERE ###
+    return X_bias
+
+
+def LeastSquare(X_train, Y_train, X_test, Y_test, bias=False):
+    
+    # add bias term
+    if bias:
+        X_train = add_bias(X_train)
+        X_test = add_bias(X_test)
+        
+    # get optimal sol
+    w = fit(X_train, Y_train)
+    
+    # train accuracy
+    train_acc = get_accuracy(w, X_train, Y_train)
+    
+    # test accuracy
+    test_acc = get_accuracy(w, X_test, Y_test)
+    
+    return w, train_acc, test_acc
