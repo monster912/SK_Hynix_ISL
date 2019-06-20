@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import division
+
 import numpy as np
 import matplotlib.pyplot as plt
 import h5py
@@ -112,9 +116,8 @@ def sigmoid(z):
     return 1 / (1 + np.exp(-z))
 
 def fit(X, Y):
-    
     ### START CODE HERE ### 
-    w =(np.linalg.inv(X.T@X)@X.T)@Y
+    w = (np.linalg.inv(X.T.dot(X)).dot(X.T)).dot(Y)
     ### END CODE HERE ###
     return w
 
