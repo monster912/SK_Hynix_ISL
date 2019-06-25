@@ -24,7 +24,7 @@ def load_dataset():
     return train_set_x_orig, train_set_y_orig.reshape(-1), test_set_x_orig, test_set_y_orig.reshape(-1), classes
 
 
-def generate_normal(n_samples, p=0.8, seed=2019):
+def generate_normal(n_samples, p=0.8, seed=20):
     np.random.seed(seed)
     n = n_samples // 2
     n_train = int(n * p)
@@ -33,7 +33,7 @@ def generate_normal(n_samples, p=0.8, seed=2019):
     Y1 = np.ones(n)
     Y2 = np.zeros(n)
     X_train = np.concatenate((X1[:n_train], X2[:n_train]))
-    X_test = np.concatenate((X1[n_train:], X2[n_train:])) + np.random.randn(1) * 10
+    X_test = np.concatenate((X1[n_train:], X2[n_train:]))
     Y_train = np.concatenate((Y1[:n_train], Y2[:n_train]))
     Y_test = np.concatenate((Y1[n_train:], Y2[n_train:]))
     return (X_train.T, Y_train), (X_test.T, Y_test)
