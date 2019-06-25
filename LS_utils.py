@@ -43,7 +43,7 @@ def decision_boundary(w, xlim, ylim, colormap, bias_flag=False):
         grids = add_bias(grids)
     pred = predict(w, grids)
     Z = pred.reshape(xx.shape)
-    plt.contour(xx, yy, Z, levels=0, colors='k')
+    plt.contour(xx, yy, Z, levels=[0], colors='k')
     if colormap == True:
         plt.contourf(xx, yy, Z, cmap='RdBu', alpha=0.7)
     

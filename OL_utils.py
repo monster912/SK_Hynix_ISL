@@ -46,7 +46,7 @@ def decision_boundary(parameters, xlim, ylim, colormap):
     grids = np.c_[xx.ravel(), yy.ravel()]
     predict = _forward(grids.T, parameters)
     Z = predict.reshape(xx.shape)
-    plt.contour(xx, yy, Z, levels=0.5, colors='k')
+    plt.contour(xx, yy, Z, levels=[0.5], colors='k')
     if colormap == True:
         plt.contourf(xx, yy, Z, cmap='RdBu', alpha=0.7)
         
